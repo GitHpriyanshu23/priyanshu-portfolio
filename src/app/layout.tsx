@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CommandMenu } from "@/components/command-menu";
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  icons: {
+    icon: "/assets/avatar-smile.png",
+    apple: "/assets/avatar-smile.png",
+  },
 };
 
 export default function RootLayout({
@@ -46,6 +51,7 @@ export default function RootLayout({
               <CommandMenu />
               <CursorPet />
             </div>
+            <Analytics />
           </TooltipProvider>
         </ThemeProvider>
       </body>
