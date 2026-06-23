@@ -92,7 +92,7 @@ export const projects: Project[] = [
     tech: ["Python", "LLMs", "Agents"],
     href: "https://github.com/GitHpriyanshu23/Agentic-AI-Memory",
     featured: true,
-    cover: "/assets/projects/agentic-ai-memory.png",
+    cover: "/assets/projects/agentic-ai.png",
     gradient: "from-violet-500/25 via-purple-500/15 to-fuchsia-500/25",
   }
 ];
