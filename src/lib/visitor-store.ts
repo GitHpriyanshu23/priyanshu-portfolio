@@ -8,7 +8,7 @@ type VisitorData = {
   count: number;
 };
 
-function useRedis() {
+function hasRedisConfig() {
   return Boolean(
     process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
   );
@@ -63,7 +63,7 @@ async function writeFileData(data: VisitorData) {
 }
 
 export async function getVisitorCount() {
-  if (useRedis()) {
+  if (hasRedisConfig()) {
     return redisGet();
   }
 
@@ -72,7 +72,7 @@ export async function getVisitorCount() {
 }
 
 export async function incrementVisitorCount() {
-  if (useRedis()) {
+  if (hasRedisConfig()) {
     return redisIncr();
   }
 

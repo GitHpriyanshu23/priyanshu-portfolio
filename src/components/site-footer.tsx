@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, GithubLogo, LinkedinLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
+import { GithubLogo, LinkedinLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/container";
 import { siteConfig } from "@/config/meta";
 
