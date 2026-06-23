@@ -147,9 +147,23 @@ Icons load from [Simple Icons CDN](https://simpleicons.org/). Add new tech names
 
 ## Visitor Counter
 
-The home page shows a live visitor count via `POST /api/visitors`. Counts are stored in `data/visitors.json` locally.
+The home page shows a live visitor count via `POST /api/visitors`.
 
-> **Note:** On serverless hosts (e.g. Vercel), file-based storage won't persist across deployments. For production, use a database like Turso or Upstash Redis.
+| Environment | Storage |
+|-------------|---------|
+| **Local dev** | `data/visitors.json` (file on disk) |
+| **Vercel / production** | [Upstash Redis](https://upstash.com/) (required) |
+
+Vercel serverless functions have a **read-only filesystem** — writes to `data/visitors.json` are lost on every deploy, which is why the counter shows "Counting visitors..." forever in production.
+
+### Set up Upstash (one-time, ~2 min)
+
+1. Go to [console.upstash.com](https://console.upstash.com) and create a free Redis database
+2. Copy **UPSTASH_REDIS_REST_URL** and **UPSTASH_REDIS_REST_TOKEN**
+3. In Vercel → your project → **Settings → Environment Variables**, add both
+4. Redeploy
+
+Locally, copy `.env.example` to `.env.local` and fill in the same vars (optional — without them, the file store is used).
 
 ---
 

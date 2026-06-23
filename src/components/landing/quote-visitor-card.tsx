@@ -7,6 +7,7 @@ import { getOrdinalSuffix } from "@/lib/ordinal";
 
 export function QuoteVisitorCard() {
   const [count, setCount] = useState<number | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const key = "visitor-counted";
@@ -16,6 +17,7 @@ export function QuoteVisitorCard() {
       try {
         if (!alreadyCounted) {
           const res = await fetch("/api/visitors", { method: "POST" });
+          if (!res.ok) throw new Error("count failed");
           const data = (await res.json()) as { count: number };
           sessionStorage.setItem(key, "true");
           setCount(data.count);
@@ -23,10 +25,11 @@ export function QuoteVisitorCard() {
         }
 
         const res = await fetch("/api/visitors");
+        if (!res.ok) throw new Error("count failed");
         const data = (await res.json()) as { count: number };
         setCount(data.count);
       } catch {
-        setCount(null);
+        setFailed(true);
       }
     };
 
@@ -56,6 +59,8 @@ export function QuoteVisitorCard() {
                 </strong>
                 <sup className="ml-0.5 text-xs">{getOrdinalSuffix(count)}</sup> visitor
               </p>
+            ) : failed ? (
+              <p className="text-sm text-muted-foreground">Thanks for visiting.</p>
             ) : (
               <p className="text-sm text-muted-foreground">Counting visitors...</p>
             )}
