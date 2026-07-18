@@ -6,6 +6,8 @@ type PageMetadataOptions = {
   description: string;
   path: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: "website" | "article";
 };
 
@@ -14,9 +16,17 @@ export function createPageMetadata({
   description,
   path,
   image = siteConfig.ogImage,
+  imageWidth = siteConfig.ogImageWidth,
+  imageHeight = siteConfig.ogImageHeight,
   type = "website",
 }: PageMetadataOptions): Metadata {
   const url = `${siteConfig.url}${path}`;
+  const imageUrl = image.startsWith("http") ? image : `${siteConfig.url}${image}`;
+  const imageType = imageUrl.endsWith(".png")
+    ? "image/png"
+    : imageUrl.endsWith(".webp")
+      ? "image/webp"
+      : "image/jpeg";
 
   return {
     title,
@@ -33,19 +43,21 @@ export function createPageMetadata({
       locale: "en_IN",
       images: [
         {
-          url: image,
-          width: 1200,
-          height: 1200,
+          url: imageUrl,
+          width: imageWidth,
+          height: imageHeight,
           alt: `${siteConfig.name} — ${title}`,
+          type: imageType,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
+      site: siteConfig.twitterHandle,
+      creator: siteConfig.twitterHandle,
       title,
       description,
-      images: [image],
-      creator: siteConfig.twitterHandle,
+      images: [imageUrl],
     },
   };
 }

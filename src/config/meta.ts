@@ -6,6 +6,8 @@ export const siteConfig = {
   url: "https://www.upriyanshu.tech",
   githubUsername: "GitHpriyanshu23",
   twitterHandle: "@imdevPU23",
-  ogImage: "/assets/avatar.png",
+  ogImage: "/assets/og-image.jpg",
+  ogImageWidth: 1024,
+  ogImageHeight: 668,
   copyright: "All rights reserved.",
 };
