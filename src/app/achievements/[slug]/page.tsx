@@ -5,6 +5,7 @@ import { AchievementGallery } from "@/components/achievement-gallery";
 import { AchievementPhoto } from "@/components/achievement-photo";
 import { Container } from "@/components/container";
 import { achievements, getAchievement } from "@/config/achievements";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
 export async function generateStaticParams() {
   return achievements.map((item) => ({ slug: item.slug }));
@@ -18,10 +19,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const achievement = getAchievement(slug);
   if (!achievement) return {};
-  return {
-    title: `${achievement.organization} — Achievements`,
-    description: `${achievement.title} at ${achievement.organization}.`,
-  };
+  return createPageMetadata({
+    title: pageTitle(achievement.organization),
+    description: `${achievement.title} at ${achievement.organization}. ${achievement.periodLong}.`,
+    path: `/achievements/${achievement.slug}`,
+    image: achievement.image,
+  });
 }
 
 export default async function AchievementDetailPage({

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
 import { MdxContent } from "@/components/mdx-content";
 import { getProjectPost, getProjectPosts } from "@/lib/mdx";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
 export async function generateStaticParams() {
   const posts = await getProjectPosts();
@@ -17,7 +18,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getProjectPost(slug);
   if (!post) return {};
-  return { title: `${post.title} — Projects` };
+  return createPageMetadata({
+    title: pageTitle(post.title),
+    description: post.description,
+    path: `/projects/${post.slug}`,
+    type: "article",
+  });
 }
 
 export default async function ProjectDetailPage({

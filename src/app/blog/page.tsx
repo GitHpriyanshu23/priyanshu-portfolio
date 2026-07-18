@@ -3,10 +3,14 @@ import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { BlogCover } from "@/components/blog-cover";
 import { Container } from "@/components/container";
 import { getBlogPosts } from "@/lib/mdx";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Blog — Priyanshu Urmaliya",
-};
+export const metadata = createPageMetadata({
+  title: pageTitle("Blog"),
+  description:
+    "Notes on building, grief, growth, and lessons from the journey by Priyanshu Urmaliya.",
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();

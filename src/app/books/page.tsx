@@ -1,12 +1,14 @@
 import { Container } from "@/components/container";
 import { MediaCoverGrid } from "@/components/media-cover-grid";
 import { books } from "@/config/books";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Books — Priyanshu Urmaliya",
+export const metadata = createPageMetadata({
+  title: pageTitle("Books"),
   description:
-    "A collection of books that made me pause, think, and see things differently.",
-};
+    "A collection of books that made Priyanshu Urmaliya pause, think, and see things differently.",
+  path: "/books",
+});
 
 export default function BooksPage() {
   return (

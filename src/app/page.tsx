@@ -5,6 +5,14 @@ import { AchievementsSection } from "@/components/landing/achievements-section";
 import { FeaturedProjects } from "@/components/landing/featured-projects";
 import { GitHubContributions } from "@/components/landing/github-contributions";
 import { QuoteVisitorCard } from "@/components/landing/quote-visitor-card";
+import { siteConfig } from "@/config/meta";
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata = createPageMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+  path: "/",
+});
 
 export default function HomePage() {
   return (

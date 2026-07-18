@@ -1,9 +1,13 @@
 import { Container } from "@/components/container";
 import { ExperienceSection } from "@/components/landing/experience-section";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Work — Priyanshu Urmaliya",
-};
+export const metadata = createPageMetadata({
+  title: pageTitle("Work"),
+  description:
+    "Work experience and internships of Priyanshu Urmaliya — roles where I've built, shipped, and learned.",
+  path: "/work",
+});
 
 export default function WorkPage() {
   return (

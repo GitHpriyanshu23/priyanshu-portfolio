@@ -8,6 +8,7 @@ import { CursorPet } from "@/components/cursor-pet";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/meta";
+import { PersonJsonLd } from "@/components/person-json-ld";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,8 +22,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   icons: {
     icon: "/assets/avatar-smile.png",
@@ -41,6 +40,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
         suppressHydrationWarning
       >
+        <PersonJsonLd />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <TooltipProvider>
             <div className="relative flex min-h-screen flex-col bg-green-grid">

@@ -3,11 +3,13 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { AchievementCard } from "@/components/landing/achievement-card";
 import { Container } from "@/components/container";
 import { achievements } from "@/config/achievements";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Achievements — Priyanshu Urmaliya",
-  description: "Hackathon wins, awards, and milestones.",
-};
+export const metadata = createPageMetadata({
+  title: pageTitle("Achievements"),
+  description: "Hackathon wins, awards, and milestones from Priyanshu Urmaliya.",
+  path: "/achievements",
+});
 
 export default function AchievementsPage() {
   return (

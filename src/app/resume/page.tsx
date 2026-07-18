@@ -2,11 +2,13 @@ import Link from "next/link";
 import { ArrowSquareOut, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/container";
 import { resumeConfig } from "@/config/resume";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Resume — Priyanshu Urmaliya",
+export const metadata = createPageMetadata({
+  title: pageTitle("Resume"),
   description: resumeConfig.description,
-};
+  path: "/resume",
+});
 
 export default function ResumePage() {
   return (

@@ -1,10 +1,14 @@
 import { Container } from "@/components/container";
 import { ProjectsGrid } from "@/components/projects-grid";
 import { projects } from "@/config/projects";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Projects — Priyanshu Urmaliya",
-};
+export const metadata = createPageMetadata({
+  title: pageTitle("Projects"),
+  description:
+    "AI systems, RAG pipelines, and full-stack products built by Priyanshu Urmaliya.",
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   return (

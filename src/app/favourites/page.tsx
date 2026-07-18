@@ -1,12 +1,14 @@
 import { Container } from "@/components/container";
 import { MediaCoverGrid } from "@/components/media-cover-grid";
 import { favouriteMovies, favouriteSeries } from "@/config/favourites";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Favourites — Priyanshu Urmaliya",
+export const metadata = createPageMetadata({
+  title: pageTitle("Favourites"),
   description:
-    "Stories I've enjoyed and connected with across movies and series.",
-};
+    "Movies and series Priyanshu Urmaliya has enjoyed and connected with.",
+  path: "/favourites",
+});
 
 export default function FavouritesPage() {
   return (

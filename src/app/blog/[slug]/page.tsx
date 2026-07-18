@@ -5,6 +5,7 @@ import { Container } from "@/components/container";
 import { MdxContent } from "@/components/mdx-content";
 import { heroConfig } from "@/config/hero";
 import { getBlogPost, getBlogPosts } from "@/lib/mdx";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -19,7 +20,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getBlogPost(slug);
   if (!post) return {};
-  return { title: `${post.title} — Blog` };
+  return createPageMetadata({
+    title: pageTitle(post.title),
+    description: post.description,
+    path: `/blog/${post.slug}`,
+    image: post.cover,
+    type: "article",
+  });
 }
 
 export default async function BlogPostPage({

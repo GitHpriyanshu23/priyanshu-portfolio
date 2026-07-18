@@ -7,6 +7,7 @@ import {
 import { Container } from "@/components/container";
 import { HighlightedText } from "@/components/highlighted-text";
 import { aboutConfig } from "@/config/about";
+import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
 const connectIconMap = {
   mail: EnvelopeSimple,
@@ -14,10 +15,11 @@ const connectIconMap = {
   github: GithubLogo,
 };
 
-export const metadata = {
-  title: "About — Priyanshu Urmaliya",
+export const metadata = createPageMetadata({
+  title: pageTitle("About"),
   description: aboutConfig.intro.replace(/\*\*/g, ""),
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
