@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CommandMenu } from "@/components/command-menu";
@@ -52,6 +53,7 @@ export default function RootLayout({
               <CursorPet />
             </div>
             <Analytics />
+            <SpeedInsights />
           </TooltipProvider>
         </ThemeProvider>
       </body>
