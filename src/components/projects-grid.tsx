@@ -1,21 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import { GithubLogo, Globe } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, GithubLogo, Globe } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/container";
-import { SectionHeading } from "@/components/section-heading";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { projects, type Project } from "@/config/projects";
 import { getTechIcon } from "@/lib/tech-icons";
 import { cn } from "@/lib/utils";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
+  const detailHref = `/projects/${project.slug}`;
+  const isOperational = Boolean(project.website);
+
   return (
-    <article
-      className="animate-in-up-on-view group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+    <LiquidGlassCard
+      glowIntensity="sm"
+      shadowIntensity="md"
+      borderRadius="18px"
+      blurIntensity="md"
+      className="animate-in-up-on-view group flex min-w-0 flex-col"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
       <div
         className={cn(
-          "relative mx-4 mt-4 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-xl bg-muted sm:aspect-[2/1]",
+          "relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-muted sm:aspect-[16/11]",
           !project.cover && ["bg-linear-to-br", project.gradient],
         )}
       >
@@ -25,7 +32,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
             alt={`${project.title} cover`}
             fill
             sizes="(max-width: 640px) 100vw, 400px"
-            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.035]"
           />
         ) : (
           <>
@@ -37,10 +44,15 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4 pt-3">
+      <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-lg font-bold tracking-tight">{project.title}</h3>
-          <div className="flex shrink-0 items-center gap-1">
+          <Link
+            href={detailHref}
+            className="min-w-0 text-xl font-bold tracking-tight transition-colors hover:text-secondary"
+          >
+            {project.title}
+          </Link>
+          <div className="flex shrink-0 items-center gap-1.5">
             {project.website && (
               <Link
                 href={project.website}
@@ -49,7 +61,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
                 aria-label={`Visit ${project.title}`}
                 className="rounded-md p-1 text-secondary transition-colors hover:text-foreground"
               >
-                <Globe className="size-4" />
+                <Globe className="size-5" />
               </Link>
             )}
             <Link
@@ -59,45 +71,73 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
               aria-label={`${project.title} on GitHub`}
               className="rounded-md p-1 text-secondary transition-colors hover:text-foreground"
             >
-              <GithubLogo className="size-4" />
+              <GithubLogo className="size-5" />
             </Link>
           </div>
         </div>
 
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-secondary">
+        <p className="mt-4 flex-1 text-base leading-relaxed text-secondary">
           {project.description}
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {project.tech.map((tech) => {
-            const icon = getTechIcon(tech);
-            return icon ? (
-              <div
-                key={tech}
-                title={tech}
-                className="flex size-7 items-center justify-center rounded-md border border-border/60 bg-background/50 dark:bg-white/95"
-              >
-                <Image
-                  src={`https://cdn.simpleicons.org/${icon}`}
-                  alt={tech}
-                  width={14}
-                  height={14}
-                  className="size-3.5"
-                  unoptimized
-                />
-              </div>
-            ) : (
-              <span
-                key={tech}
-                className="rounded-md border border-dashed border-border px-2 py-0.5 font-mono text-[10px] text-secondary"
-              >
-                {tech}
-              </span>
-            );
-          })}
+        <div className="mt-6">
+          <p className="text-sm font-medium text-secondary">Technologies</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {project.tech.map((tech) => {
+              const icon = getTechIcon(tech);
+              return icon ? (
+                <div
+                  key={tech}
+                  title={tech}
+                  className="flex size-7 items-center justify-center rounded-md bg-background/70 shadow-sm ring-1 ring-border/60 dark:bg-white/95"
+                >
+                  <Image
+                    src={`https://cdn.simpleicons.org/${icon}`}
+                    alt={tech}
+                    width={16}
+                    height={16}
+                    className="size-4"
+                    unoptimized
+                  />
+                </div>
+              ) : (
+                <span
+                  key={tech}
+                  className="rounded-md border border-dashed border-border bg-background/50 px-2 py-1 font-mono text-[10px] text-secondary"
+                >
+                  {tech}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-7 flex items-center justify-between gap-3">
+          <span
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs text-foreground",
+              isOperational ? "bg-emerald-500/12" : "bg-rose-500/12",
+            )}
+          >
+            <span
+              className={cn(
+                "size-2 rounded-full",
+                isOperational ? "bg-emerald-400" : "bg-rose-400",
+              )}
+            />
+            {isOperational ? "All Systems Operational" : "Building"}
+          </span>
+
+          <Link
+            href={detailHref}
+            className="inline-flex items-center gap-2 text-sm font-medium text-secondary transition-colors hover:text-foreground"
+          >
+            View Details
+            <ArrowRight className="size-4" />
+          </Link>
         </div>
       </div>
-    </article>
+    </LiquidGlassCard>
   );
 }
 
@@ -119,16 +159,13 @@ export function ProjectsGrid({
   return (
     <Container>
       {showHeading && (
-        <div className="mb-4 flex items-end justify-between gap-4">
-          <SectionHeading title="Featured Projects" uppercase className="mb-0" />
-          {showViewAll && (
-            <Link
-              href="/projects"
-              className="shrink-0 text-xs uppercase tracking-wider text-secondary transition-colors hover:text-foreground"
-            >
-              View all
-            </Link>
-          )}
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm text-secondary">Featured</p>
+            <h2 className="mt-1 text-3xl font-bold tracking-tight text-foreground">
+              Projects
+            </h2>
+          </div>
         </div>
       )}
 
@@ -137,6 +174,17 @@ export function ProjectsGrid({
           <ProjectCard key={project.slug} project={project} index={index} />
         ))}
       </div>
+
+      {showViewAll && (
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/projects"
+            className="rounded-lg border border-border bg-card px-5 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
+          >
+            Show all projects
+          </Link>
+        </div>
+      )}
     </Container>
   );
 }

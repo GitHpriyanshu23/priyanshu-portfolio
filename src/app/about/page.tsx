@@ -6,6 +6,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/container";
 import { HighlightedText } from "@/components/highlighted-text";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { aboutConfig } from "@/config/about";
 import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
@@ -87,15 +88,19 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold tracking-tight">{aboutConfig.principles.title}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {aboutConfig.principles.items.map((item) => (
-              <div
+              <LiquidGlassCard
                 key={item.title}
-                className="rounded-xl border border-border bg-card/60 p-4"
+                glowIntensity="sm"
+                shadowIntensity="sm"
+                borderRadius="12px"
+                blurIntensity="sm"
+                className="p-4"
               >
                 <h3 className="font-semibold">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-secondary">
                   {item.description}
                 </p>
-              </div>
+              </LiquidGlassCard>
             ))}
           </div>
         </section>
@@ -115,7 +120,13 @@ export default function AboutPage() {
       </Container>
 
       <Container>
-        <section className="max-w-2xl space-y-4 rounded-2xl border border-border bg-card/60 p-6">
+        <LiquidGlassCard
+          glowIntensity="sm"
+          shadowIntensity="md"
+          borderRadius="18px"
+          blurIntensity="md"
+          className="max-w-2xl space-y-4 p-6"
+        >
           <h2 className="text-xl font-bold tracking-tight">Let&apos;s connect</h2>
           <p className="text-sm leading-relaxed text-secondary sm:text-base">
             Whether you want to collaborate, talk about AI, or just say hi — I&apos;d love to
@@ -141,7 +152,7 @@ export default function AboutPage() {
               );
             })}
           </div>
-        </section>
+        </LiquidGlassCard>
       </Container>
     </div>
   );

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CaretRight } from "@phosphor-icons/react";
 import { AchievementPhoto } from "@/components/achievement-photo";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import {
   Collapsible,
   CollapsibleContent,
@@ -39,8 +40,12 @@ export function AchievementCard({
   ) : null;
 
   return (
-    <article
-      className="animate-in-up-on-view overflow-hidden rounded-xl border border-border bg-card/60"
+    <LiquidGlassCard
+      glowIntensity="sm"
+      shadowIntensity="md"
+      borderRadius="14px"
+      blurIntensity="md"
+      className="animate-in-up-on-view"
       style={{ animationDelay: `${delay}s` }}
     >
       {photo}
@@ -97,6 +102,6 @@ export function AchievementCard({
           )}
         </CollapsibleContent>
       </Collapsible>
-    </article>
+    </LiquidGlassCard>
   );
 }

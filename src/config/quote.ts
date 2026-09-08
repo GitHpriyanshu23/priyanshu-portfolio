@@ -9,4 +9,6 @@ export const rotatingTitles = [
   "Software Engineer",
   "Traveller",
   "Curious Builder",
+  "Creator",
+  "Always ready to learn new things"
 ];

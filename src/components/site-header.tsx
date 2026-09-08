@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CaretDown, MagnifyingGlass } from "@phosphor-icons/react";
+import { CaretDown, House, MagnifyingGlass } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { headerNav, moreNav } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 
 function MoreMenu() {
   const [open, setOpen] = useState(false);
@@ -63,8 +64,9 @@ export function SiteHeader() {
   };
 
   return (
+    <>
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/75 backdrop-blur-md">
-      <div className="container mx-auto flex h-14 max-w-3xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-14 w-full max-w-(--portfolio-content-width) items-center justify-between gap-4 px-5 sm:px-0">
         <Link
           href="/"
           className="font-mono text-lg font-bold tracking-tight text-foreground hover:opacity-80"
@@ -73,7 +75,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex items-center gap-3 sm:gap-5">
-          <nav className="flex items-center gap-4 text-sm font-medium sm:gap-5">
+          <nav className="hidden items-center gap-4 text-sm font-medium sm:flex sm:gap-5">
             {headerNav.map((item) => (
               <Link
                 key={item.href}
@@ -95,7 +97,7 @@ export function SiteHeader() {
             type="button"
             onClick={openCommand}
             aria-label="Open command palette"
-            className="inline-flex h-8 items-center gap-2 rounded-full border border-border bg-card/80 px-3 text-sm text-secondary shadow-sm transition-colors hover:border-foreground/20 hover:text-foreground"
+            className="hidden h-8 items-center gap-2 rounded-full border border-border bg-card/80 px-3 text-sm text-secondary shadow-sm transition-colors hover:border-foreground/20 hover:text-foreground sm:inline-flex"
           >
             <MagnifyingGlass className="size-4" weight="bold" />
             <span className="hidden items-center gap-1 sm:inline-flex">
@@ -114,5 +116,36 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
+    <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 sm:hidden">
+      <LiquidGlassCard
+        glowIntensity="sm"
+        shadowIntensity="md"
+        borderRadius="9999px"
+        blurIntensity="md"
+        className="p-1.5"
+        contentClassName="flex flex-row items-center gap-2"
+      >
+        <Link
+          href="/"
+          aria-label="Home"
+          className={cn(
+            "inline-flex size-10 items-center justify-center rounded-full text-secondary",
+            pathname === "/" && "bg-foreground text-background",
+          )}
+        >
+          <House className="size-5" />
+        </Link>
+        <button
+          type="button"
+          onClick={openCommand}
+          aria-label="Search portfolio"
+          className="inline-flex h-10 min-w-40 items-center justify-center gap-2 rounded-full border border-white/35 bg-white/10 px-5 text-sm font-medium text-foreground shadow-inner backdrop-blur-md"
+        >
+          <MagnifyingGlass className="size-4" weight="bold" />
+          Search
+        </button>
+      </LiquidGlassCard>
+    </div>
+    </>
   );
 }

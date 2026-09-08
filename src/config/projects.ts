@@ -34,6 +34,7 @@ export const projects: Project[] = [
       "AI + IoT plant health platform with real-time ESP32 sensor data and MobileNetV2 disease detection.",
     tech: ["Python", "Streamlit", "ESP32", "MobileNetV2"],
     href: "https://github.com/GitHpriyanshu23/Smart-Plant-Doctor",
+    website: "https://smart-plant-dr.vercel.app/",
     featured: true,
     cover: "/assets/projects/smart-plant-doctor.png",
     gradient: "from-emerald-500/25 via-green-500/15 to-lime-500/25",

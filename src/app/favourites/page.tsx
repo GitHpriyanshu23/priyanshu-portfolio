@@ -13,7 +13,7 @@ export const metadata = createPageMetadata({
 export default function FavouritesPage() {
   return (
     <div className="pb-16 pt-8">
-      <Container className="max-w-5xl space-y-12">
+      <Container className="space-y-12">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Favourites</h1>
           <p className="mt-3 max-w-xl text-secondary">

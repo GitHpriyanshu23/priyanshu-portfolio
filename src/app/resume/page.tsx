@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowSquareOut, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/container";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { resumeConfig } from "@/config/resume";
 import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
@@ -44,14 +45,19 @@ export default function ResumePage() {
       </Container>
 
       <Container>
-        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        <LiquidGlassCard
+          glowIntensity="sm"
+          shadowIntensity="md"
+          borderRadius="18px"
+          blurIntensity="md"
+        >
           <iframe
             src={resumeConfig.embedUrl}
             title="Priyanshu Urmaliya resume"
             className="aspect-[3/4] w-full min-h-[70vh] bg-muted sm:aspect-auto sm:min-h-[80vh]"
             allow="autoplay"
           />
-        </div>
+        </LiquidGlassCard>
       </Container>
     </div>
   );

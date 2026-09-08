@@ -8,6 +8,7 @@ function formatTime(timeZone: string) {
   return new Intl.DateTimeFormat("en", {
     hour: "numeric",
     minute: "2-digit",
+    second: "2-digit",
     hour12: true,
     timeZone,
   }).format(new Date());
@@ -36,7 +37,7 @@ export function TimezoneWidget({ className }: { className?: string }) {
   useEffect(() => {
     setVisitorTz(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-    const interval = setInterval(() => setNow(new Date()), 30_000);
+    const interval = setInterval(() => setNow(new Date()), 1_000);
     return () => clearInterval(interval);
   }, []);
 
@@ -53,23 +54,23 @@ export function TimezoneWidget({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex shrink-0 flex-col justify-center rounded-xl border border-border bg-card/80 px-3 py-2.5 shadow-sm backdrop-blur-sm",
+        "min-w-0 text-right text-xs text-secondary",
         className,
       )}
     >
       {sameTime ? (
-        <p className="whitespace-nowrap text-[11px] leading-tight text-secondary">
+        <p className="min-w-0 leading-tight">
           <span className="font-semibold text-foreground">{myTime}</span>
           <span className="mx-1">·</span>
           same time
         </p>
       ) : (
-        <div className="space-y-1 text-[10px] leading-tight">
-          <p className="whitespace-nowrap text-secondary">
+        <div className="space-y-1 leading-tight">
+          <p>
             <span className="uppercase tracking-wide">Your</span>{" "}
             <span className="font-semibold text-foreground">{yourTime}</span>
           </p>
-          <p className="whitespace-nowrap text-secondary">
+          <p>
             <span className="uppercase tracking-wide">My</span>{" "}
             <span className="font-semibold text-foreground">{myTime}</span>
           </p>

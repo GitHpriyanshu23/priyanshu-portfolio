@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { cn } from "@/lib/utils";
 
 export function MediaCoverCard({
@@ -18,9 +19,13 @@ export function MediaCoverCard({
   const [failed, setFailed] = useState(false);
 
   return (
-    <div
+    <LiquidGlassCard
+      glowIntensity="sm"
+      shadowIntensity="sm"
+      borderRadius="20px"
+      blurIntensity="sm"
       className={cn(
-        "group relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-border bg-muted shadow-sm",
+        "group relative aspect-[2/3]",
         className,
       )}
     >
@@ -49,6 +54,6 @@ export function MediaCoverCard({
           <p className="mt-0.5 text-xs leading-snug text-white/75">{subtitle}</p>
         )}
       </div>
-    </div>
+    </LiquidGlassCard>
   );
 }

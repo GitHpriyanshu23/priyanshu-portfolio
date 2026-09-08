@@ -13,7 +13,7 @@ export const metadata = createPageMetadata({
 export default function BooksPage() {
   return (
     <div className="pb-16 pt-8">
-      <Container className="max-w-5xl space-y-10">
+      <Container className="space-y-10">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Books</h1>
           <p className="mt-3 max-w-xl text-secondary">

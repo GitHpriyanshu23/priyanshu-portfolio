@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Container } from "@/components/container";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { quoteConfig } from "@/config/quote";
 import { getOrdinalSuffix } from "@/lib/ordinal";
 
@@ -38,7 +39,13 @@ export function QuoteVisitorCard() {
 
   return (
     <Container>
-      <div className="animate-in-up-on-view overflow-hidden rounded-2xl border border-border bg-card/80 shadow-sm backdrop-blur-sm">
+      <LiquidGlassCard
+        glowIntensity="sm"
+        shadowIntensity="md"
+        borderRadius="18px"
+        blurIntensity="md"
+        className="animate-in-up-on-view"
+      >
         <div className="grid sm:grid-cols-[1fr_auto]">
           <div className="border-b border-border p-5 sm:border-b-0 sm:border-r">
             <span className="text-5xl leading-none text-muted-foreground sm:text-6xl">&ldquo;</span>
@@ -66,7 +73,7 @@ export function QuoteVisitorCard() {
             )}
           </div>
         </div>
-      </div>
+      </LiquidGlassCard>
     </Container>
   );
 }

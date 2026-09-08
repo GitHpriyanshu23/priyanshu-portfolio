@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Copy, Check, SealCheck } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -38,11 +39,31 @@ export function Hero() {
   };
 
   return (
-    <Container className="pt-4">
+    <Container className="pt-4 sm:pt-0">
       <div className="animate-in-up-on-view flex flex-col gap-5">
-        <div className="flex items-start gap-4">
-          <ProfileAvatar />
-          <div className="min-w-0 flex-1">
+        <div className="corner-frame relative h-[calc(var(--grid-cell-size)*4)] overflow-visible">
+          <div className="relative size-full overflow-hidden border border-foreground/15">
+          <Image
+            src="/assets/priyanshu-header.jpeg"
+            alt="Priyanshu header"
+            fill
+            priority
+            sizes="(max-width: 640px) 100vw, 720px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/10" />
+          </div>
+        </div>
+
+        <TimezoneWidget className="-mt-3 self-end" />
+
+        <div className="-mt-[calc(var(--grid-cell-size)*2)] flex items-end gap-4">
+          <div className="relative z-30 shrink-0 rounded-full bg-background p-1">
+            <ProfileAvatar />
+          </div>
+        </div>
+
+        <div className="min-w-0">
             <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight sm:text-4xl">
               {heroConfig.name}
               <SealCheck
@@ -70,7 +91,6 @@ export function Hero() {
                 </span>
               </button>
             </p>
-          </div>
         </div>
 
         <p className="max-w-xl text-sm leading-relaxed text-secondary sm:text-base">
@@ -101,9 +121,8 @@ export function Hero() {
           })}
         </div>
 
-        <div className="flex flex-wrap items-stretch justify-between gap-5 pt-1">
+        <div className="max-w-full pt-1">
           <SpotifyLastPlayed />
-          <TimezoneWidget />
         </div>
       </div>
     </Container>

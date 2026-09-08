@@ -4,6 +4,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { AchievementGallery } from "@/components/achievement-gallery";
 import { AchievementPhoto } from "@/components/achievement-photo";
 import { Container } from "@/components/container";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { achievements, getAchievement } from "@/config/achievements";
 import { createPageMetadata, pageTitle } from "@/lib/metadata";
 
@@ -49,7 +50,13 @@ export default async function AchievementDetailPage({
           Back to achievements
         </Link>
 
-        <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-card">
+        <LiquidGlassCard
+          glowIntensity="sm"
+          shadowIntensity="md"
+          borderRadius="18px"
+          blurIntensity="md"
+          className="mt-6"
+        >
           <AchievementPhoto
             achievement={achievement}
             className="aspect-[16/10] w-full sm:aspect-[2/1]"
@@ -75,7 +82,7 @@ export default async function AchievementDetailPage({
               </ul>
             )}
           </div>
-        </div>
+        </LiquidGlassCard>
       </Container>
 
       {hasGallery ? (

@@ -1,7 +1,6 @@
 import { Hero } from "@/components/landing/hero";
 import { TechStackSection } from "@/components/landing/tech-stack-section";
-import { ExperienceSection } from "@/components/landing/experience-section";
-import { AchievementsSection } from "@/components/landing/achievements-section";
+import { FeaturedExperienceSection } from "@/components/landing/featured-experience-section";
 import { FeaturedProjects } from "@/components/landing/featured-projects";
 import { GitHubContributions } from "@/components/landing/github-contributions";
 import { QuoteVisitorCard } from "@/components/landing/quote-visitor-card";
@@ -16,12 +15,11 @@ export const metadata = createPageMetadata({
 
 export default function HomePage() {
   return (
-    <div className="space-y-16 pb-20 pt-14">
+    <div className="space-y-12 pb-24 pt-0 sm:space-y-16 sm:pb-20 sm:pt-8">
       <Hero />
       <TechStackSection />
-      <ExperienceSection limit={3} showAllLink />
-      <AchievementsSection limit={3} showAllLink />
-      <FeaturedProjects limit={2} />
+      <FeaturedExperienceSection />
+      <FeaturedProjects />
       <GitHubContributions />
       <QuoteVisitorCard />
     </div>
