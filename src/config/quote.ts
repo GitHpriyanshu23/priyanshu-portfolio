@@ -1,6 +1,6 @@
 export const quoteConfig = {
-  text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-  author: "Winston Churchill",
+  text: "You are what you believe in. You become that which you believe you can become",
+  author: "Bhagavad Gita",
 };
 
 export const rotatingTitles = [

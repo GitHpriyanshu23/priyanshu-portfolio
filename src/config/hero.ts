@@ -1,6 +1,7 @@
 export const heroConfig = {
   name: "Priyanshu Urmaliya",
   email: "priyanshuurmaliya23011@gmail.com",
+  calendarUrl: "https://cal.com/priyanshu-urmaliya/15min?overlayCalendar=true",
   bio: "AI engineer and full-stack developer building RAG systems, LLM apps, and real-world products.",
   avatar: "/assets/avatar.png",
   avatarSmile: "/assets/avatar-smile.png",

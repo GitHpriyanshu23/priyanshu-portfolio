@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Copy, Check, SealCheck } from "@phosphor-icons/react";
-import { useState } from "react";
 import {
+  CalendarBlank,
   EnvelopeSimple,
   FileText,
   GithubLogo,
   LinkedinLogo,
   MediumLogo,
+  SealCheck,
   XLogo,
 } from "@phosphor-icons/react";
 import { ProfileAvatar } from "@/components/profile-avatar";
@@ -30,14 +30,6 @@ const iconMap = {
 };
 
 export function Hero() {
-  const [copied, setCopied] = useState(false);
-
-  const copyEmail = async () => {
-    await navigator.clipboard.writeText(heroConfig.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <Container className="pt-4 sm:pt-0">
       <div className="animate-in-up-on-view flex flex-col gap-5">
@@ -73,24 +65,24 @@ export function Hero() {
               />
             </h1>
             <RotatingTitle />
-            <p className="mt-3 flex flex-wrap items-center gap-x-1 gap-y-1 text-sm sm:text-base">
-              <button
-                type="button"
-                onClick={() => void copyEmail()}
-                className="group inline-flex cursor-pointer items-center gap-1.5 text-secondary transition-colors hover:text-foreground"
-                aria-label="Copy email"
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <Link
+                href={heroConfig.calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-3.5 py-1.5 text-xs font-medium text-background transition-opacity hover:opacity-90 sm:text-sm"
               >
-                <span className="hidden md:block">{heroConfig.email}</span>
-                <span className="block md:hidden">Email</span>
-                <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
-                  {copied ? (
-                    <Check className="size-4 text-foreground" />
-                  ) : (
-                    <Copy className="size-4 transition-transform group-hover:scale-110" />
-                  )}
-                </span>
-              </button>
-            </p>
+                <CalendarBlank className="size-3.5 sm:size-4" weight="bold" />
+                Book a call
+              </Link>
+              <Link
+                href={`mailto:${heroConfig.email}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted sm:text-sm"
+              >
+                <EnvelopeSimple className="size-3.5 sm:size-4" weight="bold" />
+                Email me
+              </Link>
+            </div>
         </div>
 
         <p className="max-w-xl text-sm leading-relaxed text-secondary sm:text-base">
