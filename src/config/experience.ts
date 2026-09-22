@@ -14,8 +14,8 @@ export const experience: ExperienceItem[] = [
   {
     company: "Valency Energy",
     role: "AI/ML Intern",
-    periodShort: "Jun 25 – Nov 25",
-    periodLong: "June 2025 – November 2025",
+    periodShort: "May 25 – Dec 25",
+    periodLong: "May 2025 – December 2025",
     locationShort: "Remote, IN",
     locationLong: "Remote, India ",
     details: [
