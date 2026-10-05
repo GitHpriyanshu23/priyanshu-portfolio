@@ -21,6 +21,7 @@ export const projects: Project[] = [
       "A production-grade RAG system with semantic reranking, hybrid retrieval, multi-source ingestion, and source-cited answers.",
     tech: ["FastAPI", "FAISS", "Google Generative AI", "Python"],
     href: "https://github.com/GitHpriyanshu23/Ragkno",
+    website: "https://ragkno.com",
     featured: true,
     cover: "/assets/projects/Ragkno.png",
     gradient: "from-blue-500/25 via-indigo-500/15 to-violet-500/25",
