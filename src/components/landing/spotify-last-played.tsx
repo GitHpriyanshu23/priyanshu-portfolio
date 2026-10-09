@@ -20,6 +20,8 @@ type SpotifyTrackState = {
   setupRequired?: boolean;
 };
 
+const waveformHeights = [28, 44, 56, 40, 24, 36, 22, 30, 58, 20, 26, 42, 48, 24, 34, 52, 38, 26, 30, 46, 54, 28, 40, 32, 22, 48, 18, 50, 56, 30, 22];
+
 const staticTrack = {
   title: lastPlayedTrack.title,
   artist: lastPlayedTrack.artist,
@@ -40,6 +42,7 @@ export function SpotifyLastPlayed() {
   const [spotifyStatus, setSpotifyStatus] =
     useState<SpotifyTrackState>(fallbackStatus);
   const [isPlayingOnSite, setIsPlayingOnSite] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
 
   const playableSource = staticTrack.previewUrl ?? spotifyStatus.previewUrl;
   const statusLabel = spotifyStatus.isLive ? "Listening now" : "Last listened";
@@ -88,15 +91,6 @@ export function SpotifyLastPlayed() {
     }
   }, [isPlayingOnSite, playableSource]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleEnded = () => setIsPlayingOnSite(false);
-    audio.addEventListener("ended", handleEnded);
-
-    return () => audio.removeEventListener("ended", handleEnded);
-  }, []);
 
   return (
     <LiquidGlassCard
@@ -107,9 +101,18 @@ export function SpotifyLastPlayed() {
       className="w-full p-3"
       contentClassName="relative z-10"
     >
-      <audio ref={audioRef} src={playableSource ?? undefined} preload="metadata" />
+      <audio
+        ref={audioRef}
+        src={playableSource ?? undefined}
+        preload="metadata"
+        onTimeUpdate={(event) => setElapsed(event.currentTarget.currentTime)}
+        onPlay={() => setIsPlayingOnSite(true)}
+        onPause={() => setIsPlayingOnSite(false)}
+        onEnded={() => setIsPlayingOnSite(false)}
+        onError={() => setIsPlayingOnSite(false)}
+      />
 
-      <div className="flex items-center gap-3">
+      <div className="music-card-row flex items-center gap-3">
         <div className="relative flex h-[84px] w-[108px] shrink-0 items-center">
           <button
             type="button"
@@ -174,19 +177,37 @@ export function SpotifyLastPlayed() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsPlayingOnSite((current) => !current)}
-          disabled={!playableSource}
-          className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#1DB954] text-white shadow-sm transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-40"
-          aria-label={isPlayingOnSite ? "Pause Apocalypse" : "Play Apocalypse"}
-        >
-          {isPlayingOnSite ? (
-            <Pause className="size-4" weight="fill" />
-          ) : (
-            <Play className="ml-0.5 size-4" weight="fill" />
-          )}
-        </button>
+        <div className={cn("music-player", isPlayingOnSite && "music-player--playing")}>
+          <button
+            type="button"
+            onClick={() => setIsPlayingOnSite((current) => !current)}
+            disabled={!playableSource}
+            className="music-player-toggle"
+            aria-label={isPlayingOnSite ? "Pause Apocalypse" : "Play Apocalypse"}
+            aria-pressed={isPlayingOnSite}
+          >
+            {isPlayingOnSite ? (
+              <Pause className="size-4" weight="fill" />
+            ) : (
+              <Play className="ml-0.5 size-4" weight="fill" />
+            )}
+          </button>
+          <div className="music-player-waveform" aria-hidden="true">
+            {waveformHeights.map((height, index) => (
+              <span
+                key={index}
+                style={{
+                  height: `${height}%`,
+                  animationDelay: `${index * -0.13}s`,
+                  animationDuration: `${0.65 + (index % 5) * 0.12}s`,
+                }}
+              />
+            ))}
+          </div>
+          <span className="music-player-time" aria-hidden="true">
+            {Math.floor(elapsed)}s
+          </span>
+        </div>
       </div>
 
       {!playableSource && (
