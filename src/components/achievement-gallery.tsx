@@ -20,7 +20,8 @@ export function AchievementGallery({
           <img
             src={src}
             alt={`${title} — photo ${index + 1}`}
-            loading={index < 4 ? "eager" : "lazy"}
+            loading="lazy"
+            decoding="async"
             className="w-full rounded-xl border border-border bg-muted object-cover"
           />
         </div>

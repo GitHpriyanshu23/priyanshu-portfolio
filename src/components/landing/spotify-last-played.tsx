@@ -104,7 +104,7 @@ export function SpotifyLastPlayed() {
       <audio
         ref={audioRef}
         src={playableSource ?? undefined}
-        preload="metadata"
+        preload="none"
         onTimeUpdate={(event) => setElapsed(event.currentTarget.currentTime)}
         onPlay={() => setIsPlayingOnSite(true)}
         onPause={() => setIsPlayingOnSite(false)}

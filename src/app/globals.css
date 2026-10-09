@@ -236,7 +236,7 @@ body {
 }
 
 .animate-in-up-on-view {
-  animation: fade-in-up 0.5s ease-out both;
+  animation: none;
 }
 
 ::selection {
@@ -428,4 +428,29 @@ body {
   .music-player, .music-player-waveform, .music-player-time,
   .music-player-toggle { transition: none; }
   .music-player-waveform span, .animate-vinyl-spin { animation: none; }
+}
+
+/* Offscreen sections retain their HTML while the browser defers layout/painting. */
+main [data-scroll-section] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+.scroll-reveal-pending {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.scroll-reveal-visible {
+  animation: fade-in-up 450ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-pending { opacity: 1; transform: none; }
+  .scroll-reveal-visible { animation: none; }
+}
+
+@media print {
+  main [data-scroll-section] { content-visibility: visible; }
+  .scroll-reveal-pending { opacity: 1; transform: none; }
 }

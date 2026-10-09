@@ -1,19 +1,117 @@
 ---
 title: "RAGKNO"
-description: "Production-grade RAG with semantic reranking, hybrid retrieval, and multi-source ingestion."
+description: "An open-source knowledge workspace that turns documents, websites, and Google Drive files into cited, streaming answers."
 date: "05.2026"
-tech: ["FastAPI", "FAISS", "Google Generative AI", "Python"]
+tech: ["React", "Vite", "FastAPI", "Python", "ChromaDB", "PostgreSQL", "BM25", "sentence-transformers"]
 ---
 
-RAGKNO is a production-grade RAG system built for real documents, real users, and real latency constraints.
+## Introduction
 
-## Features
+RagKno is an open-source retrieval-augmented generation workspace built around a simple idea: ask naturally, then verify the evidence. Instead of searching through files one at a time, you can bring documents, public web pages, and selected Google Drive files into a knowledge workspace and ask questions across them.
 
-- Hybrid retrieval with semantic reranking
-- Multi-source ingestion: Google Drive, PDF, URL
-- Persistent multi-session memory
-- Source-cited answers
+The system retrieves relevant passages, reranks the evidence, and streams an answer with citations. The aim is to make information easier to find while keeping the original sources close enough to check.
 
 ## Why I built it
 
-Most RAG demos stop at "upload a PDF." I wanted something you could actually ship.
+Most RAG demos stop at “upload a PDF.” I wanted to explore what comes after that: multiple sources, persistent conversations, user-specific retrieval, source management, deployment, and an interface people can actually use.
+
+Building RagKno brought the retrieval pipeline and the product experience together. A useful answer needs more than a model response—it needs relevant context, clear feedback while processing, and a way to verify where the answer came from.
+
+## Core features
+
+- **Multiple ingestion paths:** add PDF, DOCX, and TXT files, public URLs, or selected Google Drive documents.
+- **Hybrid retrieval:** combine dense semantic search with BM25 keyword matching to find both related concepts and exact terms.
+- **Semantic reranking:** use a cross-encoder to reorder candidate passages before constructing the model context.
+- **Parent-context expansion:** restore surrounding context so retrieved fragments are easier to interpret.
+- **Cited answers:** connect generated responses to retrieved source material for verification.
+- **Streaming conversations:** deliver the answer over server-sent events, with visible retrieval progress.
+- **Persistent chat history:** revisit conversations and rename or delete threads in a responsive Markdown-based interface.
+- **Source controls:** inspect indexed sources and unindex material to exclude it from future retrieval.
+- **Authenticated workspaces:** scope threads, messages, sources, vectors, and Drive credentials to the user.
+- **Self-hosting and evaluation:** include deployment documentation, health endpoints, and a RAGAS evaluation workflow.
+
+## How it works
+
+1. **Collect the knowledge.** A user adds files, a public web page, or selected Drive documents.
+2. **Extract and index.** The backend extracts text, splits it into chunks, and stores embeddings in a persistent Chroma index with user-scoped metadata.
+3. **Retrieve evidence.** A question runs through dense retrieval and BM25 keyword matching.
+4. **Refine the context.** Cross-encoder reranking prioritizes useful passages, and parent-context expansion adds surrounding information.
+5. **Generate the answer.** The selected model provider receives the retrieved context and produces a response.
+6. **Stream and preserve.** FastAPI streams the answer and citations to the React client, while the application preserves conversation data for later use.
+
+The frontend communicates with FastAPI through an `/api` proxy. PostgreSQL stores accounts, conversations, source metadata, and encrypted Drive credentials; Chroma handles the persistent vector index.
+
+## Use cases
+
+### Research and study
+
+Bring together several papers or course documents, ask about a shared topic, and inspect the cited passages. Questions such as “How do these papers approach the same problem?” give a starting point for further reading.
+
+### Finding answers in reports
+
+Index a collection of reports or reference documents and ask targeted questions instead of manually searching every file. Keyword retrieval helps with specific names and terminology, while semantic retrieval covers related phrasing.
+
+### Working with Google Drive knowledge
+
+Select relevant Drive documents and use them alongside uploaded files and web sources in one conversation. Source controls let you change what future queries can retrieve.
+
+### Exploring RAG engineering
+
+The open-source implementation is also a practical reference for connecting ingestion, retrieval, reranking, streaming, authentication, and persistent storage in a single application.
+
+## Tech stack
+
+- **React 18, Vite, and React Router:** the frontend application, build pipeline, and navigation.
+- **Motion and GSAP:** interface transitions and animation.
+- **Python, FastAPI, Uvicorn, and Pydantic:** API routing, request validation, ingestion endpoints, and streaming responses.
+- **ChromaDB:** persistent vector storage for document embeddings.
+- **sentence-transformers:** embedding and cross-encoder tooling for semantic retrieval and reranking.
+- **BM25:** keyword-based retrieval to complement vector search.
+- **AgentRouter and Google Generative AI:** configurable generation providers; the current project configuration supports AgentRouter as the default and Google as an alternative.
+- **PostgreSQL:** production persistence for users, chats, source metadata, and encrypted Drive credentials. SQLite supports local development.
+- **Google OAuth and Drive integration:** account and document-access workflows.
+- **Cloudflare Pages and Pages Functions:** frontend hosting and the first-party API proxy.
+- **Docker:** backend packaging, with documented Hugging Face Spaces and AWS EC2 deployment paths.
+- **RAGAS, pytest, and Vitest:** retrieval evaluation and backend/frontend testing.
+
+## Engineering challenges
+
+### Balancing relevance and context
+
+Semantic similarity alone does not guarantee that a passage answers the question. Hybrid retrieval broadens the candidate pool; reranking then prioritizes evidence. Parent-context expansion helps avoid losing meaning when a useful passage is only a small fragment of the original document.
+
+### Keeping workspaces separate
+
+Retrieval must respect the authenticated user, just as conversation and source APIs do. RagKno scopes data and source operations to users, and mutation routes validate sessions and CSRF tokens. This is part of the application design, rather than a claim of independently audited security.
+
+### Connecting streaming, sessions, and deployment
+
+A streaming application needs the browser, proxy, and API to work together. The Cloudflare proxy keeps API requests first-party while forwarding the stream. Durable database and vector storage are needed so conversations and indexed documents survive backend restarts.
+
+### Making source management understandable
+
+Users need to know what the system is searching. Listing sources and supporting unindexing makes retrieval scope explicit. Unindexing excludes material from future searches; it should not be confused with deleting existing conversations or every historical copy of that material.
+
+## Performance and evaluation
+
+RagKno uses streaming to show an answer progressively rather than waiting for the entire response. Retrieval progress also makes the work before generation visible. Persistent vector storage allows indexed content to be reused across conversations and service restarts when deployed with durable storage.
+
+There are tradeoffs: reranking adds computation, larger context increases generation cost, and ingestion depends on document size and extraction complexity. Hosting resources, model-provider latency, and cold starts also affect the experience.
+
+The repository includes a RAGAS evaluation command and a sample dataset for assessing answer faithfulness, answer relevance, and retrieval context. These are evaluation capabilities, not published benchmark results. I am not claiming a latency target or accuracy percentage without a reproducible measured run.
+
+## Improvements I want to make
+
+- **More reliable first ingestion:** clearer upload errors, actionable retry guidance, and better feedback when extraction or indexing fails.
+- **A representative evaluation suite:** cover varied documents, exact-term questions, cross-document comparisons, and questions the sources cannot answer.
+- **Measured performance:** track time to first token, end-to-end latency, ingestion duration, and retrieval quality on a documented dataset.
+- **Clearer citation inspection:** make it easier to move from an answer to the relevant passage and its surrounding context.
+- **Better public documentation:** publish demonstrated workflows for research, multiple-document questions, source controls, and self-hosting.
+
+## What I learned
+
+A RAG product is a chain of decisions: what to ingest, how to split it, which evidence to retrieve, how much context to restore, and how to present the result. Improving only the language model leaves many of the most important problems untouched.
+
+RagKno gave me a practical way to work across that entire chain—from retrieval engineering and backend persistence to a usable frontend and deployment workflow.
+
+[Try RagKno](https://ragkno.com) · [Explore the source code](https://github.com/GitHpriyanshu23/Ragkno)

@@ -20,7 +20,7 @@ export function TechStackSection() {
                 className="flex size-[52px] items-center justify-center rounded-xl border border-dashed border-border bg-card/60 transition-colors hover:border-foreground/25 hover:bg-card dark:border-border dark:bg-white/95 dark:hover:bg-white"
               >
                 <Image
-                  src={`https://cdn.simpleicons.org/${tech.icon}`}
+                  src={tech.icon.startsWith("/") ? tech.icon : `https://cdn.simpleicons.org/${tech.icon}`}
                   alt={tech.name}
                   width={26}
                   height={26}

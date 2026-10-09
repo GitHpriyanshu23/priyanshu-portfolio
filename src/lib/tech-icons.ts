@@ -15,6 +15,8 @@ export const techIconMap: Record<string, string> = {
   PostgreSQL: "postgresql",
   MongoDB: "mongodb",
   FAISS: "meta",
+  ChromaDB: "/assets/chromadb.png",
+  Cloudflare: "cloudflare",
   Vercel: "vercel",
   Postman: "postman",
   Figma: "figma",

@@ -17,6 +17,8 @@ export const techStack: TechItem[] = [
   { name: "PostgreSQL", icon: "postgresql" },
   { name: "MongoDB", icon: "mongodb" },
   { name: "FAISS", icon: "meta" },
+  { name: "ChromaDB", icon: "/assets/chromadb.png" },
+  { name: "Cloudflare", icon: "cloudflare" },
   { name: "Vercel", icon: "vercel" },
   { name: "Postman", icon: "postman" },
   { name: "Figma", icon: "figma" },

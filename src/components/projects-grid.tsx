@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
   const detailHref = `/projects/${project.slug}`;
-  const isOperational = Boolean(project.website);
 
   return (
     <LiquidGlassCard
@@ -82,7 +81,8 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
 
         <div className="mt-6">
           <p className="text-sm font-medium text-secondary">Technologies</p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex items-end justify-between gap-3">
+            <div className="flex min-w-0 flex-wrap gap-2">
             {project.tech.map((tech) => {
               const icon = getTechIcon(tech);
               return icon ? (
@@ -92,7 +92,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
                   className="flex size-7 items-center justify-center rounded-md bg-background/70 shadow-sm ring-1 ring-border/60 dark:bg-white/95"
                 >
                   <Image
-                    src={`https://cdn.simpleicons.org/${icon}`}
+                    src={icon.startsWith("/") ? icon : `https://cdn.simpleicons.org/${icon}`}
                     alt={tech}
                     width={16}
                     height={16}
@@ -109,33 +109,18 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
                 </span>
               );
             })}
+            </div>
+            <Link
+              href={detailHref}
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-secondary transition-colors hover:bg-muted hover:text-foreground"
+            >
+              View Details
+              <ArrowRight className="size-3.5" />
+            </Link>
           </div>
         </div>
 
-        <div className="mt-7 flex items-center justify-between gap-3">
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs text-foreground",
-              isOperational ? "bg-emerald-500/12" : "bg-rose-500/12",
-            )}
-          >
-            <span
-              className={cn(
-                "size-2 rounded-full",
-                isOperational ? "bg-emerald-400" : "bg-rose-400",
-              )}
-            />
-            {isOperational ? "All Systems Operational" : "Building"}
-          </span>
 
-          <Link
-            href={detailHref}
-            className="inline-flex items-center gap-2 text-sm font-medium text-secondary transition-colors hover:text-foreground"
-          >
-            View Details
-            <ArrowRight className="size-4" />
-          </Link>
-        </div>
       </div>
     </LiquidGlassCard>
   );

@@ -26,7 +26,7 @@ export function ProfileAvatar({ className }: { className?: string }) {
         width={96}
         height={96}
         className="absolute inset-0 size-full rounded-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        priority
+        loading="lazy"
       />
     </div>
   );

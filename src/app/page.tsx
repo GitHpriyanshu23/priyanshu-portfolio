@@ -1,5 +1,6 @@
 import { Hero } from "@/components/landing/hero";
-import { TechStackSection } from "@/components/landing/tech-stack-section";
+import { Suspense } from "react";
+import { LazyTechStack } from "@/components/landing/lazy-tech-stack";
 import { FeaturedExperienceSection } from "@/components/landing/featured-experience-section";
 import { FeaturedProjects } from "@/components/landing/featured-projects";
 import { GitHubContributions } from "@/components/landing/github-contributions";
@@ -17,10 +18,12 @@ export default function HomePage() {
   return (
     <div className="space-y-12 pb-24 pt-0 sm:space-y-16 sm:pb-20 sm:pt-8">
       <Hero />
-      <TechStackSection />
+      <LazyTechStack />
       <FeaturedExperienceSection />
       <FeaturedProjects />
-      <GitHubContributions />
+      <Suspense fallback={<div className="mx-auto h-52 max-w-3xl rounded-xl bg-muted/40" aria-label="Loading GitHub activity" />}>
+        <GitHubContributions />
+      </Suspense>
       <QuoteVisitorCard />
     </div>
   );

@@ -19,7 +19,7 @@ export const projects: Project[] = [
     date: "05.2026",
     description:
       "A production-grade RAG system with semantic reranking, hybrid retrieval, multi-source ingestion, and source-cited answers.",
-    tech: ["FastAPI", "FAISS", "Google Generative AI", "Python"],
+    tech: ["React", "FastAPI", "ChromaDB", "PostgreSQL", "Python"],
     href: "https://github.com/GitHpriyanshu23/Ragkno",
     website: "https://ragkno.com",
     featured: true,
